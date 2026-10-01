@@ -13,6 +13,13 @@ export default function Operations() {
 
     const actionButtons = [
         {
+            iconName: "musical-note",
+            title: t("karaoke.entry"),
+            action() {
+                navigate(ROUTE_PATH.KARAOKE);
+            },
+        },
+        {
             iconName: "fire",
             title: t("home.recommendSheet"),
             action() {

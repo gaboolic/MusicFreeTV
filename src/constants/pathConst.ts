@@ -19,6 +19,8 @@ export default {
     downloadCachePath: `${basePath}/cache/download/`,
     downloadPath: `${basePath}/download/`,
     downloadMusicPath: `${basePath}/download/music/`,
+    /** K歌生成的伴奏存放目录 */
+    karaokePath: `${basePath}/karaoke/`,
     mmkvPath: `${basePath}/mmkv`,
     mmkvCachePath: `${basePath}/cache/mmkv`,
 };

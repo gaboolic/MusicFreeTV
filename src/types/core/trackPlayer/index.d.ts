@@ -190,4 +190,32 @@ export interface ITrackPlayer extends IInjectable, EventEmitter<{
      * @param position 目标位置（秒）
      */
     seekTo(position: number): Promise<void>;
+
+    /**
+     * 当前临时音源覆盖（K歌伴奏/纯伴奏），无则为 null
+     */
+    readonly playSourceOverride: {
+        url: string;
+        headers?: Record<string, string>;
+        type?: string;
+    } | null;
+
+    /**
+     * 设置临时音源覆盖（K歌：伴奏 / 本地纯伴奏），不改变当前歌曲与歌词联动。
+     * @param override 覆盖音源，传 null 恢复原唱
+     * @returns 是否成功
+     */
+    setPlaySourceOverride(
+        override: {
+            url: string;
+            headers?: Record<string, string>;
+            type?: string;
+        } | null,
+        options?: { autoPlay?: boolean }
+    ): Promise<boolean>;
+
+    /**
+     * 清除覆盖标记，但不改变当前播放（切换歌曲时使用）
+     */
+    clearPlaySourceOverride(): void;
 }

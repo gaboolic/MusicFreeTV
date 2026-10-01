@@ -38,6 +38,13 @@ function HomeDrawer(props: any) {
 
     const basicSetting: ISettingOptions[] = [
         {
+            icon: "musical-note",
+            title: t("karaoke.entry"),
+            onPress: () => {
+                navigate(ROUTE_PATH.KARAOKE);
+            },
+        },
+        {
             icon: "cog-8-tooth",
             title: t("sidebar.basicSettings"),
             onPress: () => {

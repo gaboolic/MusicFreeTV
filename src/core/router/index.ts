@@ -46,6 +46,8 @@ export const ROUTE_PATH = {
     SET_CUSTOM_THEME: "set-custom-theme",
     /** 权限管理 */
     PERMISSIONS: "permissions",
+    /** K歌 */
+    KARAOKE: "karaoke",
 } as const;
 
 type ValueOf<T> = T[keyof T];
@@ -56,6 +58,7 @@ type RouterParamsBase = Record<RoutePaths, any>;
 interface RouterParams extends RouterParamsBase {
     home: undefined;
     "music-detail": undefined;
+    karaoke: undefined;
     "search-page": undefined;
     "local-sheet-detail": {
         id: string;

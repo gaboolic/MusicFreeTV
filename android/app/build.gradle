@@ -125,7 +125,7 @@ android {
     namespace "fun.upup.musicfree"
 
     defaultConfig {
-        applicationId "fun.upup.musicfree"
+        applicationId "tv.musicfree.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode appVersionCode

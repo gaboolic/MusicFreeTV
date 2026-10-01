@@ -4,7 +4,6 @@ import {
     StyleSheet,
     TextProps,
     TextStyle,
-    TouchableHighlight,
     TouchableOpacity,
     View,
     ViewStyle,
@@ -20,6 +19,7 @@ import {
 import FastImage from "./fastImage";
 import { ImageStyle } from "react-native-fast-image";
 import Icon, { IIconName } from "@/components/base/icon.tsx";
+import Focusable from "./focusable";
 
 interface IListItemProps {
     // 是否有左右边距
@@ -69,15 +69,20 @@ function ListItem(props: IListItemProps) {
     const colors = useColors();
 
     return (
-        <TouchableHighlight
+        <Focusable
             style={styles.container}
-            underlayColor={colors.listActive}
+            disabledFocus={!onPress && !onLongPress}
             onPress={onPress}
-            onLongPress={onLongPress}>
+            onLongPress={onLongPress}
+            focusedStyle={{
+                borderWidth: 3,
+                borderColor: colors.primary,
+                backgroundColor: colors.listActive,
+            }}>
             <View style={[styles.container, defaultStyle, style]}>
                 {children}
             </View>
-        </TouchableHighlight>
+        </Focusable>
     );
 }
 

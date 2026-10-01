@@ -11,6 +11,13 @@ export default function Operations() {
 
     const actionButtons = [
         {
+            iconName: "musical-note",
+            title: t("karaoke.entry"),
+            action() {
+                navigate(ROUTE_PATH.KARAOKE);
+            },
+        },
+        {
             iconName: "fire",
             title: t("home.recommendSheet"),
             action() {
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: rpx(24),
         marginVertical: rpx(32),
         flexDirection: "row",
-        flexWrap: "nowrap",
+        flexWrap: "wrap",
     },
     actionButtonStyle: {
         width: rpx(157.5),

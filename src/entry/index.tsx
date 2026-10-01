@@ -17,6 +17,7 @@ import { StatusBar } from "react-native";
 import { ReduceMotion, ReducedMotionConfig } from "react-native-reanimated";
 import { routes } from "@/core/router/routes.tsx";
 import ErrorBoundary from "@/components/errorBoundary";
+import useTVKeyNavigation from "@/hooks/useTVKeyNavigation";
 
 /**
  * 字体颜色
@@ -30,6 +31,9 @@ const Stack = createNativeStackNavigator<any>();
 
 export default function Pages() {
     const theme = Theme.useTheme();
+
+    // 电视遥控器方向键导航（手机端无按键事件，自动无副作用）
+    useTVKeyNavigation();
 
     return (
         <ErrorBoundary>

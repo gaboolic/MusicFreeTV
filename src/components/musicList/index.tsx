@@ -11,6 +11,7 @@ import { isSameMediaItem } from "@/utils/mediaUtils";
 import Icon from "../base/icon";
 import { iconSizeConst } from "@/constants/uiConst";
 import useColors from "@/hooks/useColors";
+import useFocusAutoScroll from "@/hooks/useFocusAutoScroll";
 
 interface IMusicListProps {
     /** 顶部 */
@@ -50,6 +51,11 @@ export default function MusicList(props: IMusicListProps) {
     } = props;    
     const colors = useColors();
     const flashListRef = useRef<FlashList<IMusic.IMusicItem>>(null);
+    const containerRef = useRef<View>(null);
+    const focusScroll = useFocusAutoScroll({
+        scrollRef: flashListRef,
+        containerRef,
+    });
     const [showBadge, setShowBadge] = useState(false);
     const hideTimeoutRef = useRef<NodeJS.Timeout>();
 
@@ -106,9 +112,10 @@ export default function MusicList(props: IMusicListProps) {
     }, []);    
     
     return (
-        <View style={styles.container}>
+        <View ref={containerRef} style={styles.container}>
             <FlashList
                 ref={flashListRef}
+                onScroll={focusScroll.onScroll}
                 ListHeaderComponent={Header}
                 ListEmptyComponent={<ListEmpty state={state} onRetry={onRetry} />}
                 ListFooterComponent={

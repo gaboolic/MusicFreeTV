@@ -530,6 +530,42 @@ export interface ILanguageData {
     "repeatMode.SHUFFLE": string; // 随机播放
     "repeatMode.QUEUE": string; // 列表循环
     "repeatMode.SINGLE": string; // 单曲循环
+
+    // K歌相关
+    "karaoke.title": string; // K歌
+    "karaoke.entry": string; // K歌
+    "karaoke.noMusic": string; // 暂无播放歌曲
+    "karaoke.noMusicHint": string; // 先去搜索或播放一首歌吧
+    "karaoke.mode.original": string; // 原唱
+    "karaoke.mode.accompaniment": string; // 伴奏
+    "karaoke.mode.instrumental": string; // 纯伴奏
+    "karaoke.accompaniment.searching": string; // 正在寻找伴奏…
+    "karaoke.accompaniment.notFound": string; // 未找到伴奏，可尝试本地生成
+    "karaoke.accompaniment.found": string; // 已找到伴奏
+    "karaoke.accompaniment.switched": string; // 已切换为{0}
+    "karaoke.accompaniment.searchAgain": string; // 重新搜索伴奏
+    "karaoke.accompaniment.generateLocal": string; // 本地生成伴奏
+    "karaoke.accompaniment.generating": string; // 正在生成伴奏 {0}%
+    "karaoke.accompaniment.generateSuccess": string; // 伴奏生成成功
+    "karaoke.accompaniment.generateFail": string; // 伴奏生成失败
+    "karaoke.accompaniment.needLocal": string; // 需要先下载该歌曲才能生成伴奏
+    "karaoke.accompaniment.removingVocal": string; // 正在消除人声…
+    "karaoke.micMonitor": string; // 耳返
+    "karaoke.micMonitor.on": string; // 耳返已开启
+    "karaoke.micMonitor.off": string; // 耳返已关闭
+    "karaoke.micMonitor.permissionDenied": string; // 未获得麦克风权限
+    "karaoke.micVolume": string; // 麦克风音量
+    "karaoke.accompanimentVolume": string; // 伴奏音量
+    "karaoke.emptyLyric": string; // 暂无歌词，尽情跟唱吧
+    "karaoke.tvHint": string; // 遥控器：方向键选择，确认键执行
+
+    // TV相关
+    "tv.focusHint": string; // 方向键移动，确认键选择
+    "basicSettings.karaoke": string; // K歌
+    "basicSettings.karaoke.autoSearchAccompaniment": string; // 进入K歌自动搜索伴奏
+    "basicSettings.karaoke.autoVocalRemoval": string; // 找不到伴奏时本地消除人声
+    "basicSettings.karaoke.defaultMode": string; // 默认播放模式
+    "basicSettings.karaoke.micMonitor": string; // 默认开启耳返
 }
 
 // 语言接口定义

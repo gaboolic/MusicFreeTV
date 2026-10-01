@@ -20,7 +20,11 @@ interface IMediaExtraProperties {
     /** 歌词偏移 */
     lyricOffset?: number;
     /** 关联歌词 */
-    associatedLrc?: ICommon.IMediaBase
+    associatedLrc?: ICommon.IMediaBase;
+    /** K歌：绑定的伴奏歌曲（优先使用） */
+    karaokeAccompaniment?: IMusic.IMusicItem;
+    /** K歌：本地生成的纯伴奏文件路径 */
+    karaokeInstrumentalPath?: string;
 }
 
 

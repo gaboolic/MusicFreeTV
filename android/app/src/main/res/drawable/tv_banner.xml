@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android TV 启动器横幅（320x180）。
+  这里用矢量图占位，部分 TV 启动器更偏好 PNG，
+  建议后续替换为同尺寸的 PNG（drawable-xhdpi/tv_banner.png）。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path
+        android:pathData="M0,0h320v180h-320z"
+        android:fillColor="#12122B" />
+    <path
+        android:pathData="M40,110h24v40h-24z"
+        android:fillColor="#66CCFF" />
+    <path
+        android:pathData="M80,80h24v70h-24z"
+        android:fillColor="#8F7CFF" />
+    <path
+        android:pathData="M120,50h24v100h-24z"
+        android:fillColor="#FF7CC3" />
+    <path
+        android:pathData="M160,90h24v60h-24z"
+        android:fillColor="#66FFCC" />
+    <path
+        android:pathData="M200,60h24v90h-24z"
+        android:fillColor="#FFD166" />
+    <path
+        android:pathData="M240,100h24v50h-24z"
+        android:fillColor="#FF9F66" />
+</vector>

@@ -131,6 +131,11 @@ export default function BasicSetting() {
     const musicOrderInLocalSheet = useAppConfig("basic.musicOrderInLocalSheet");
     const tryChangeSourceWhenPlayFail = useAppConfig("basic.tryChangeSourceWhenPlayFail");
 
+    const karaokeAutoSearchAccompaniment = useAppConfig("karaoke.autoSearchAccompaniment");
+    const karaokeAutoVocalRemoval = useAppConfig("karaoke.autoVocalRemoval");
+    const karaokeDefaultMode = useAppConfig("karaoke.defaultMode");
+    const karaokeMicMonitor = useAppConfig("karaoke.micMonitor");
+
     const { t } = useI18N();
 
     const debugEnableErrorLog = useAppConfig("debug.errorLog");
@@ -419,6 +424,36 @@ export default function BasicSetting() {
             title: t("basicSettings.lyric"),
             data: [],
             footer: <LyricSetting />,
+        },
+        {
+            title: t("basicSettings.karaoke"),
+            data: [
+                createSwitch(
+                    t("basicSettings.karaoke.autoSearchAccompaniment"),
+                    "karaoke.autoSearchAccompaniment",
+                    karaokeAutoSearchAccompaniment ?? true,
+                ),
+                createSwitch(
+                    t("basicSettings.karaoke.autoVocalRemoval"),
+                    "karaoke.autoVocalRemoval",
+                    karaokeAutoVocalRemoval ?? false,
+                ),
+                createRadio(
+                    t("basicSettings.karaoke.defaultMode"),
+                    "karaoke.defaultMode",
+                    ["original", "accompaniment"],
+                    karaokeDefaultMode ?? "original",
+                    {
+                        original: t("karaoke.mode.original"),
+                        accompaniment: t("karaoke.mode.accompaniment"),
+                    },
+                ),
+                createSwitch(
+                    t("basicSettings.karaoke.micMonitor"),
+                    "karaoke.micMonitor",
+                    karaokeMicMonitor ?? false,
+                ),
+            ],
         },
         {
             title: t("basicSettings.cache"),

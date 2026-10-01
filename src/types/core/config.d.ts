@@ -32,6 +32,18 @@ export interface IAppConfigProperties {
     "basic.musicOrderInLocalSheet": SortType;
     "basic.tryChangeSourceWhenPlayFail": boolean;
 
+    // Karaoke（K歌）
+    /** 进入K歌时自动搜索伴奏 */
+    "karaoke.autoSearchAccompaniment": boolean;
+    /** K歌默认播放模式 */
+    "karaoke.defaultMode": "original" | "accompaniment";
+    /** 找不到伴奏时，自动用本地人声消除生成伴奏 */
+    "karaoke.autoVocalRemoval": boolean;
+    /** 默认开启耳返（麦克风监听） */
+    "karaoke.micMonitor": boolean;
+    /** 耳返音量 0 ~ 100 */
+    "karaoke.micVolume": number;
+
     // Lyric
     "lyric.showStatusBarLyric": boolean;
     "lyric.topPercent": number;

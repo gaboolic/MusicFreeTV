@@ -1,9 +1,9 @@
 import ThemeText from "@/components/base/themeText";
+import Focusable from "@/components/base/focusable";
 import useColors from "@/hooks/useColors";
 import rpx from "@/utils/rpx";
 import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon, { IIconName } from "@/components/base/icon.tsx";
 
 interface IActionButtonProps {
@@ -19,8 +19,13 @@ export default function ActionButton(props: IActionButtonProps) {
     const colors = useColors();
     // rippleColor="rgba(0, 0, 0, .32)"
     return (
-        <TouchableOpacity
+        <Focusable
             onPress={action}
+            focusedStyle={{
+                borderWidth: 3,
+                borderColor: colors.primary,
+                transform: [{ scale: 1.06 }],
+            }}
             style={[
                 styles.wrapper,
                 {
@@ -43,7 +48,7 @@ export default function ActionButton(props: IActionButtonProps) {
                     {title}
                 </ThemeText>
             </>
-        </TouchableOpacity>
+        </Focusable>
     );
 }
 

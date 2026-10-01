@@ -68,6 +68,13 @@ class TrackPlayer extends EventEmitter<{
     // 播放队列索引map
     private playListIndexMap = createMediaIndexMap([] as IMusic.IMusicItem[]);
 
+    /** K歌临时音源覆盖（伴奏/本地纯伴奏），不改变当前歌曲 */
+    private sourceOverride: {
+        url: string;
+        headers?: Record<string, string>;
+        type?: string;
+    } | null = null;
+
 
     private static maxMusicQueueLength = 10000;
     private static halfMaxMusicQueueLength = 5000;
@@ -115,6 +122,16 @@ class TrackPlayer extends EventEmitter<{
 
     public get playList() {
         return getDefaultStore().get(playListAtom);
+    }
+
+    /** 当前是否处于临时音源覆盖（K歌伴奏）状态 */
+    public get playSourceOverride() {
+        return this.sourceOverride;
+    }
+
+    /** 清除覆盖标记，但不动当前播放（切换歌曲时使用） */
+    public clearPlaySourceOverride() {
+        this.sourceOverride = null;
     }
 
 
@@ -701,6 +718,120 @@ class TrackPlayer extends EventEmitter<{
             // 修改失败
             return false;
         }
+    }
+
+    /**
+     * 获取原始音源（用于 K 歌切回原唱）
+     */
+    private async fetchOriginalSource(musicItem: IMusic.IMusicItem) {
+        const plugin = this.pluginManagerService.getByMedia(musicItem);
+        const qualityOrder = getQualityOrder(
+            this.configService.getConfig("basic.defaultPlayQuality") ?? "standard",
+            this.configService.getConfig("basic.playQualityOrder") ?? "asc",
+        );
+
+        for (const quality of qualityOrder) {
+            if (!this.isCurrentMusic(musicItem)) {
+                return null;
+            }
+            const source =
+                (await plugin?.methods
+                    ?.getMediaSource(musicItem, quality)
+                    .catch(() => null)) ?? null;
+            if (source?.url) {
+                this.setQuality(quality);
+                return source;
+            }
+        }
+
+        if (musicItem.source) {
+            for (const quality of qualityOrder) {
+                if (musicItem.source[quality]?.url) {
+                    this.setQuality(quality);
+                    return musicItem.source[quality]!;
+                }
+            }
+        }
+
+        if (musicItem.url) {
+            return { url: musicItem.url };
+        }
+
+        return null;
+    }
+
+    /**
+     * 设置临时音源覆盖（K歌：伴奏 / 本地纯伴奏），不会改变当前歌曲与歌词联动。
+     * @param override 覆盖的音源，传 null 表示恢复原唱
+     * @returns 是否成功
+     */
+    async setPlaySourceOverride(
+        override: {
+            url: string;
+            headers?: Record<string, string>;
+            type?: string;
+        } | null,
+        options?: { autoPlay?: boolean },
+    ): Promise<boolean> {
+        const musicItem = this.currentMusic;
+        if (!musicItem) {
+            this.sourceOverride = override;
+            return false;
+        }
+
+        const progress = await ReactNativeTrackPlayer.getProgress().catch(
+            () => null,
+        );
+        const playingState = await ReactNativeTrackPlayer.getPlaybackState().catch(
+            () => null,
+        );
+        const playing =
+            options?.autoPlay ??
+            (playingState ? !musicIsPaused(playingState.state) : true);
+
+        let url: string | undefined;
+        let headers: Record<string, string> | undefined;
+        let type: string | undefined;
+
+        if (override) {
+            url = override.url;
+            headers = override.headers;
+            type = override.type;
+        } else {
+            const original = await this.fetchOriginalSource(musicItem);
+            if (!original?.url) {
+                this.sourceOverride = null;
+                return false;
+            }
+            url = original.url;
+            headers = original.headers;
+        }
+
+        if (!url || !this.isCurrentMusic(musicItem)) {
+            return false;
+        }
+
+        this.sourceOverride = override;
+
+        const track = this.mergeTrackSource(musicItem, {
+            url,
+            headers,
+            ...(type ? { type } : {}),
+        }) as unknown as Track;
+
+        // 特殊类型源
+        if (getUrlExt(url) === ".m3u8") {
+            // @ts-ignore
+            track.type = "hls";
+        }
+
+        await this.setTrackSource(track, playing);
+
+        if (progress?.position && isFinite(progress.position)) {
+            await this.seekTo(progress.position);
+        }
+
+        return true;
     }
 
     async playWithReplacePlayList(

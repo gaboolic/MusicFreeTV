@@ -7,24 +7,29 @@ import { fontSizeConst, fontWeightConst } from "@/constants/uiConst";
 import Share from "react-native-share";
 import { B64Asset } from "@/constants/assetsConst";
 import IconButton from "@/components/base/iconButton";
+import Icon from "@/components/base/icon.tsx";
+import Focusable from "@/components/base/focusable";
 import { useCurrentMusic } from "@/core/trackPlayer";
+import { ROUTE_PATH } from "@/core/router";
+import { useI18N } from "@/core/i18n";
 
 export default function NavBar() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const musicItem = useCurrentMusic();
+    const { t } = useI18N();
     // const {showShare} = useShare();
 
     return (
         <View style={styles.container}>
-            <IconButton
-                name="arrow-left"
-                sizeType={"normal"}
-                color="white"
-                style={styles.button}
+            <Focusable
+                accessibilityLabel="back"
                 onPress={() => {
                     navigation.goBack();
                 }}
-            />
+                style={[styles.button, styles.navIconButton]}
+                focusedStyle={styles.focusedButton}>
+                <Icon name="arrow-left" color="white" size={rpx(56)} />
+            </Focusable>
             <View style={styles.headerContent}>
                 <Text numberOfLines={1} style={styles.headerTitleText}>
                     {musicItem?.title ?? "--"}
@@ -42,6 +47,15 @@ export default function NavBar() {
                     ) : null}
                 </View>
             </View>
+            <Focusable
+                accessibilityLabel={t("karaoke.entry")}
+                onPress={() => {
+                    navigation.navigate(ROUTE_PATH.KARAOKE);
+                }}
+                style={[styles.button, styles.karaokeButton]}
+                focusedStyle={styles.focusedButton}>
+                <Icon name="musical-note" color="white" size={rpx(56)} />
+            </Focusable>
             <IconButton
                 name="share"
                 color="white"
@@ -73,6 +87,23 @@ const styles = StyleSheet.create({
     },
     button: {
         marginHorizontal: rpx(24),
+    },
+    karaokeButton: {
+        paddingHorizontal: rpx(12),
+        paddingVertical: rpx(8),
+        borderRadius: rpx(16),
+        borderWidth: 3,
+        borderColor: "transparent",
+    },
+    navIconButton: {
+        padding: rpx(8),
+        borderRadius: rpx(16),
+        borderWidth: 3,
+        borderColor: "transparent",
+    },
+    focusedButton: {
+        borderColor: "#ffffff",
+        borderWidth: 3,
     },
     headerContent: {
         flex: 1,

@@ -6,6 +6,7 @@ import { emptyFunction, localPluginHash, supportLocalMediaType } from "@/constan
 import pathConst from "@/constants/pathConst";
 import Config from "@/core/appConfig";
 import downloader, { DownloadFailReason, DownloaderEvent } from "@/core/downloader";
+import karaokeManager from "@/core/karaoke";
 import LocalMusicSheet from "@/core/localMusicSheet";
 import lyricManager from "@/core/lyricManager";
 import musicHistory from "@/core/musicHistory";
@@ -35,6 +36,8 @@ TrackPlayer.injectDependencies(Config, musicHistory, PluginManager);
 downloader.injectDependencies(Config, PluginManager);
 lyricManager.injectDependencies(TrackPlayer, Config, PluginManager);
 MusicSheet.injectDependencies(Config);
+karaokeManager.injectDependencies(TrackPlayer, PluginManager, Config);
+karaokeManager.setup();
 
 
 async function bootstrapImpl() {
